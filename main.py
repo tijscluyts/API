@@ -1,16 +1,17 @@
 from fastapi import FastAPI
 import database
 from queries import movie_queries as queries
+from models import models
 
 app = FastAPI()
 
 @app.get("/ticket")
 def get_sum_tickets():
     query = queries.movie_total_tickets_query
-    tickets = database.execute_sql_query(query)
-    if isinstance(tickets, Exception):
-        return tickets, 500
-    return tickets[0]
+    ticket = database.execute_sql_query(query)
+    if isinstance(ticket, Exception):
+        return ticket, 500
+    return ticket[0]
 
 @app.get("/review")
 def get_all_review(stars: int):
