@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class tickets(BaseModel):
-    ticketId: int
+    total: int
 
 class review(BaseModel):
     stars: int
