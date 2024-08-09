@@ -7,7 +7,7 @@ from models import models
 app = FastAPI()
 
 origins = [
-    "http://localhost",
+    "http://localhost:7777",
     "https://localhost",
     "http://127.0.0.1:8080",
     "https://127.0.0.1:8080",
