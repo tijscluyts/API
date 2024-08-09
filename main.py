@@ -1,9 +1,26 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import database
 from queries import movie_queries as queries
 from models import models
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:7777",
+    "https://localhost",
+    "http://127.0.0.1:8080",
+    "https://127.0.0.1:8080",
+    "https://api-eight-khaki.vercel.app/ticket"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/nieuwe_review")
 def create_review(review: models.review):
