@@ -5,13 +5,29 @@ from models import models
 
 app = FastAPI()
 
+@app.post("/nieuwe_review")
+def create_review(review: models.review):
+    query = queries.insert_review_query
+    success = database.execute_sql_query(query, (
+        review.stars,
+        review.naam,
+        review.bericht,
+    ))
+    if success:
+        return review
 @app.get("/ticket")
 def get_sum_tickets():
     query = queries.movie_total_tickets_query
     ticket = database.execute_sql_query(query)
     if isinstance(ticket, Exception):
         return ticket, 500
-    return ticket[0]
+    total_tickets = []
+    for i in ticket:
+        tidict = {
+            "total": i[0]
+        }
+        total_tickets.append(tidict)
+    return {'ticket': total_tickets}
 
 @app.get("/review")
 def get_all_review(stars: int):
